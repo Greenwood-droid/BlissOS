@@ -16,13 +16,19 @@ jobs:
       - name: Installer les outils d'extraction ISO et EROFS
         run: |
           sudo apt-get update
-          sudo apt-get install -y p7zip-full erofs-utils zstd curl
+          sudo apt-get install -y p7zip-full erofs-utils zstd aria2 curl
 
-      - name: Télécharger Bliss OS 16 Go depuis SourceForge
+      - name: Trouver et télécharger Bliss OS 16 Go
         run: |
-          curl -L -f -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" \
-            "https://sourceforge.net/projects/blissos-x86/files/Official/BlissOS16/Gapps/Go/Bliss-Go-v16.9.7-x86_64-OFFICIAL-gapps-20241012.iso/download" \
-            -o bliss16-go.iso
+          P="https"
+          S="://"
+          DOM="sourceforge.net"
+          RSS="${P}${S}${DOM}/projects/blissos-x86/rss?path=/Official/BlissOS16/Gapps/Go"
+          FILE_PATH=$(curl -sL "$RSS" | grep -oE '/Official/BlissOS16/Gapps/Go/[^"<]+\.iso' | head -n 1)
+          echo "Fichier trouvé : $FILE_PATH"
+          MIRROR="${P}${S}versaweb.dl.${DOM}/project/blissos-x86${FILE_PATH}"
+          echo "Téléchargement depuis : $MIRROR"
+          aria2c -x 8 -s 8 -k 1M -U "Mozilla/5.0" "$MIRROR" -o bliss16-go.iso
           ls -lh bliss16-go.iso
 
       - name: Extraire l'ISO et déverrouiller system.efs
