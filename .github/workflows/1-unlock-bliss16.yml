@@ -16,11 +16,14 @@ jobs:
       - name: Installer les outils d'extraction ISO et EROFS
         run: |
           sudo apt-get update
-          sudo apt-get install -y p7zip-full erofs-utils zstd wget
+          sudo apt-get install -y p7zip-full erofs-utils zstd curl
 
       - name: Télécharger Bliss OS 16 Go depuis SourceForge
         run: |
-          wget -O bliss16-go.iso "https://sourceforge.net"
+          curl -L -f -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" \
+            "https://sourceforge.net" \
+            -o bliss16-go.iso
+          ls -lh bliss16-go.iso
 
       - name: Extraire l'ISO et déverrouiller system.efs
         run: |
