@@ -20,9 +20,10 @@ jobs:
 
       - name: Télécharger Bliss OS 16 Go depuis SourceForge
         run: |
-          curl -L -f -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" \
-            "https://sourceforge.net" \
-            -o bliss16-go.iso
+          HOST="https://sourceforge.net"
+          DIR="project/blissos-x86/Official/BlissOS16/Gapps/Go"
+          ISO="Bliss-Go-v16.9.7-x86_64-OFFICIAL-gapps-20241012.iso"
+          curl -L -f -A "Mozilla/5.0" "${HOST}/${DIR}/${ISO}" -o bliss16-go.iso
           ls -lh bliss16-go.iso
 
       - name: Extraire l'ISO et déverrouiller system.efs
