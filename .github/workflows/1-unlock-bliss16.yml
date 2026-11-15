@@ -18,12 +18,12 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y p7zip-full erofs-utils zstd curl
 
-      - name: Télécharger Bliss OS 16 Go depuis SourceForge
+      - name: Trouver et télécharger la dernière ISO Bliss OS 16 Go
         run: |
-          HOST="https://sourceforge.net"
-          DIR="project/blissos-x86/Official/BlissOS16/Gapps/Go"
-          ISO="Bliss-Go-v16.9.7-x86_64-OFFICIAL-gapps-20241012.iso"
-          curl -L -f -A "Mozilla/5.0" "${HOST}/${DIR}/${ISO}" -o bliss16-go.iso
+          RSS_URL="https://sourceforge.net"
+          ISO_URL=$(curl -sL "$RSS_URL" | grep -oE 'https://[^"<]+\.iso/download' | head -n 1)
+          echo "URL détectée : $ISO_URL"
+          curl -L -f -A "Mozilla/5.0" "$ISO_URL" -o bliss16-go.iso
           ls -lh bliss16-go.iso
 
       - name: Extraire l'ISO et déverrouiller system.efs
