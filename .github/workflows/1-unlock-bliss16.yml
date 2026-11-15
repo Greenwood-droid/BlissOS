@@ -15,7 +15,7 @@ jobs:
           RSS="${P}${S}${DOM}/projects/blissos-x86/rss?path=/Official/BlissOS16/Gapps/Go"
           FILE_PATH=$(curl -sL "$RSS" | grep -oE '/Official/BlissOS16/Gapps/Go/[^"<]+\.iso' | head -n 1)
           echo "Fichier detecte : $FILE_PATH"
-          URL="${P}${S}versaweb.dl.${DOM}/project/blissos-x86${FILE_PATH}"
+          URL="${P}${S}downloads.${DOM}/project/blissos-x86${FILE_PATH}"
           echo "Telechargement depuis : $URL"
           curl -L -f -A "Mozilla/5.0" "$URL" -o bliss16-go.iso
           ls -lh bliss16-go.iso
