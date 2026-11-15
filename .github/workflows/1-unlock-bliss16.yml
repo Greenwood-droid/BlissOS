@@ -1,0 +1,49 @@
+name: 1 - Télécharger et Déverrouiller Bliss OS 16 Go
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  unlock-bliss:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v4
+
+      - name: Installer les outils d'extraction ISO et EROFS
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y p7zip-full erofs-utils zstd wget
+
+      - name: Télécharger Bliss OS 16 Go depuis SourceForge
+        run: |
+          wget -O bliss16-go.iso "https://sourceforge.net"
+
+      - name: Extraire l'ISO et déverrouiller system.efs
+        run: |
+          mkdir -p iso_extract bliss16_unlocked/data
+          7z x bliss16-go.iso -oiso_extract
+          cp iso_extract/kernel bliss16_unlocked/
+          cp iso_extract/initrd.img bliss16_unlocked/
+          fsck.erofs --extract=bliss16_unlocked/system iso_extract/system.efs
+
+      - name: Activer l'overlay (ro.config.low_ram=false) et appliquer l'overlay GitHub
+        run: |
+          find bliss16_unlocked/system -name "build.prop" -exec sudo sed -i 's/ro.config.low_ram=true/ro.config.low_ram=false/g' {} +
+          if [ -d "overlay/system" ] && [ "$(ls -A overlay/system | grep -v '.gitkeep')" ]; then
+            sudo cp -rf overlay/system/* bliss16_unlocked/system/
+          fi
+
+      - name: Créer l'archive prête pour partition ext4 (droits root préservés)
+        run: |
+          sudo tar --numeric-owner -cpf - bliss16_unlocked | zstd -T0 -3 -o bliss16-go-unlocked-ext4.tar.zst
+
+      - name: Publier le pack sur GitHub Releases
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v16.9.7-go-unlocked
+          name: "Bliss OS 16.9.7 Go Déverrouillé (ext4)"
+          files: bliss16-go-unlocked-ext4.tar.zst
