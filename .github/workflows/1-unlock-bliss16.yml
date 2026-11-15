@@ -7,15 +7,20 @@ jobs:
   test-download:
     runs-on: ubuntu-latest
     steps:
-      - name: Telecharger ISO
+      - name: Telecharger ISO via navigateur headless
         run: |
-          P="https"
-          S="://"
-          DOM="sourceforge.net"
-          RSS="${P}${S}${DOM}/projects/blissos-x86/rss?path=/Official/BlissOS16/Gapps/Go"
-          FILE_PATH=$(curl -sL "$RSS" | grep -oE '/Official/BlissOS16/Gapps/Go/[^"<]+\.iso' | head -n 1)
-          echo "Fichier detecte : $FILE_PATH"
-          URL="${P}${S}downloads.${DOM}/project/blissos-x86${FILE_PATH}"
-          echo "Telechargement depuis : $URL"
-          curl -L -f -A "Mozilla/5.0" "$URL" -o bliss16-go.iso
+          python3 - << 'PY'
+          import urllib.request
+          from playwright.sync_api import sync_playwright
+
+          url = "https://sourceforge.net/projects/blissos-x86/files/Official/BlissOS16/Gapps/Go/Bliss-Go-v16.9.7-x86_64-OFFICIAL-gapps-20241012.iso/download"
+          with sync_playwright() as p:
+              browser = p.chromium.launch()
+              page = browser.new_page()
+              with page.expect_download(timeout=300000) as download_info:
+                  page.goto(url)
+              download = download_info.value
+              download.save_as("bliss16-go.iso")
+              browser.close()
+          PY
           ls -lh bliss16-go.iso
