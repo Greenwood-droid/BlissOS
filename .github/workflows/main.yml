@@ -18,14 +18,8 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Configurer le SDK Android
-        uses: android-actions/setup-android@v3
-
       - name: Compiler l'APK avec Gradle
-        uses: gradle/actions/setup-gradle@v4
-        with:
-          gradle-version: '8.2'
-      - run: gradle assembleDebug
+        run: gradle assembleDebug
 
       - name: Publier l'APK généré
         uses: actions/upload-artifact@v4
