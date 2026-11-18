@@ -1,0 +1,105 @@
+Module                  Size  Used by
+sch_ingress            16384  1 
+ccm                    20480  6 
+tcp_diag               16384  0 
+ath3k                  20480  0 
+udp_diag               16384  0 
+inet_diag              24576  2 tcp_diag,udp_diag
+joydev                 24576  0 
+intel_rapl_msr         16384  0 
+mei_hdcp               20480  0 
+hid_rmi                20480  0 
+rmi_core               90112  2 hid_rmi
+videobuf2_vmalloc      16384  1 rmi_core
+videobuf2_memops       16384  1 videobuf2_vmalloc
+videobuf2_v4l2         32768  1 rmi_core
+videobuf2_common       57344  4 rmi_core,videobuf2_vmalloc,videobuf2_memops,videobuf2_v4l2
+wmi_bmof               16384  0 
+x86_pkg_temp_thermal    16384  0 
+kvm_intel             294912  0 
+snd_hda_codec_hdmi     65536  1 
+kvm                  1052672  1 kvm_intel
+irqbypass              16384  1 kvm
+intel_rapl_common      24576  1 intel_rapl_msr
+intel_powerclamp       16384  0 
+ghash_clmulni_intel    16384  0 
+crc32_pclmul           16384  0 
+snd_hda_codec_realtek   163840  1 
+r8169                 102400  0 
+coretemp               16384  0 
+snd_hda_codec_generic    86016  1 snd_hda_codec_realtek
+realtek                28672  1 
+mdio_devres            16384  1 r8169
+of_mdio                16384  1 mdio_devres
+ledtrig_audio          16384  1 snd_hda_codec_generic
+fixed_phy              16384  1 of_mdio
+fwnode_mdio            16384  1 of_mdio
+mei_me                 36864  1 
+mei                   135168  3 mei_hdcp,mei_me
+libphy                176128  6 r8169,realtek,mdio_devres,of_mdio,fixed_phy,fwnode_mdio
+snd_sof_pci_intel_apl    16384  0 
+snd_sof_intel_hda_common   147456  1 snd_sof_pci_intel_apl
+i915                 2801664  229 
+snd_sof_intel_hda      16384  1 snd_sof_intel_hda_common
+snd_sof_pci            20480  2 snd_sof_pci_intel_apl,snd_sof_intel_hda_common
+snd_sof_xtensa_dsp     16384  1 snd_sof_intel_hda_common
+drm_buddy              20480  1 i915
+drm_display_helper    155648  1 i915
+snd_sof               233472  2 snd_sof_intel_hda_common,snd_sof_pci
+snd_sof_utils          16384  1 snd_sof
+snd_soc_skl           155648  0 
+ttm                    81920  1 i915
+snd_soc_sst_ipc        16384  1 snd_soc_skl
+snd_soc_sst_dsp        32768  1 snd_soc_skl
+cec                    57344  2 i915,drm_display_helper
+snd_soc_hdac_hda       20480  2 snd_sof_intel_hda_common,snd_soc_skl
+snd_soc_acpi_intel_match    77824  3 snd_sof_pci_intel_apl,snd_sof_intel_hda_common,snd_soc_skl
+snd_soc_acpi           16384  3 snd_sof_intel_hda_common,snd_soc_skl,snd_soc_acpi_intel_match
+drm_kms_helper        188416  2 i915,drm_display_helper
+ath10k_pci             53248  0 
+snd_soc_avs           118784  0 
+snd_soc_hda_codec      20480  1 snd_soc_avs
+ath10k_core           421888  1 ath10k_pci
+drm                   638976  44 i915,drm_buddy,drm_display_helper,ttm,drm_kms_helper
+ath                    32768  1 ath10k_core
+snd_hda_ext_core       28672  5 snd_sof_intel_hda_common,snd_soc_skl,snd_soc_hdac_hda,snd_soc_avs,snd_soc_hda_codec
+i2c_algo_bit           20480  1 i915
+mac80211             1007616  1 ath10k_core
+snd_soc_core          327680  6 snd_sof_intel_hda_common,snd_sof,snd_soc_skl,snd_soc_hdac_hda,snd_soc_avs,snd_soc_hda_codec
+snd_compress           20480  1 snd_soc_core
+ac97_bus               16384  1 snd_soc_core
+snd_pcm_dmaengine      20480  1 snd_soc_core
+snd_hda_intel          49152  0 
+snd_intel_dspcfg       36864  5 snd_sof_intel_hda_common,snd_sof,snd_soc_skl,snd_soc_avs,snd_hda_intel
+snd_hda_codec         163840  9 snd_hda_codec_hdmi,snd_hda_codec_realtek,snd_hda_codec_generic,snd_sof_intel_hda,snd_soc_skl,snd_soc_hdac_hda,snd_soc_avs,snd_soc_hda_codec,snd_hda_intel
+snd_hda_core          114688  12 snd_hda_codec_hdmi,snd_hda_codec_realtek,snd_hda_codec_generic,snd_sof_intel_hda_common,snd_sof_intel_hda,snd_soc_skl,snd_soc_hdac_hda,snd_soc_avs,snd_soc_hda_codec,snd_hda_ext_core,snd_hda_intel,snd_hda_codec
+snd_hwdep              20480  1 snd_hda_codec
+snd_pcm               143360  12 snd_hda_codec_hdmi,snd_sof_intel_hda_common,snd_sof,snd_sof_utils,snd_soc_skl,snd_soc_avs,snd_soc_core,snd_compress,snd_pcm_dmaengine,snd_hda_intel,snd_hda_codec,snd_hda_core
+snd_timer              36864  1 snd_pcm
+snd                   106496  11 snd_hda_codec_hdmi,snd_hda_codec_realtek,snd_hda_codec_generic,snd_sof,snd_soc_core,snd_compress,snd_hda_intel,snd_hda_codec,snd_hwdep,snd_pcm,snd_timer
+soundcore              16384  1 snd
+btusb                  57344  0 
+btrtl                  20480  1 btusb
+btmtk                  16384  1 btusb
+btintel                36864  1 btusb
+btbcm                  24576  1 btusb
+cfg80211              958464  3 ath10k_core,ath,mac80211
+bluetooth             782336  9 ath3k,btusb,btrtl,btmtk,btintel,btbcm
+ecdh_generic           16384  1 bluetooth
+ecc                    57344  1 ecdh_generic
+i2c_i801               36864  0 
+i2c_smbus              16384  1 i2c_i801
+ideapad_laptop         28672  0 
+sparse_keymap          16384  1 ideapad_laptop
+platform_profile       16384  1 ideapad_laptop
+video                  57344  2 i915,ideapad_laptop
+intel_lpss_pci         28672  0 
+intel_lpss             16384  1 intel_lpss_pci
+idma64                 20480  0 
+virt_dma               16384  1 idma64
+wdat_wdt               16384  0 
+mac_hid                16384  0 
+pcspkr                 16384  0 
+efi_pstore             16384  0 
+wmi                    28672  3 wmi_bmof,ideapad_laptop,video
+pinctrl_geminilake     24576  1 
