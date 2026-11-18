@@ -6,6 +6,8 @@ plugins {
 android {
     compileSdk 33
 
+    namespace 'com.blissos.diagnostic'
+
     defaultConfig {
         applicationId "com.blissos.diagnostic"
         minSdk 26
